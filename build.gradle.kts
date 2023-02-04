@@ -17,6 +17,8 @@ repositories {
 	mavenCentral()
 }
 
+extra["springCloudVersion"] = "2022.0.1"
+
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -27,13 +29,22 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 
 	//Log
-	implementation("org.springframework.cloud:spring-cloud-starter-sleuth:3.1.3")
+//	implementation("org.springframework.cloud:spring-cloud-starter-sleuth:3.1.3")
 
 	//Kafka
 	implementation("org.springframework.kafka:spring-kafka")
 	testImplementation("org.springframework.kafka:spring-kafka-test")
 	implementation("org.apache.avro:avro:1.11.0")
 
+	// Feign dependencies:
+	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
+	implementation ("org.springframework.cloud:spring-cloud-starter-loadbalancer")
+}
+
+dependencyManagement {
+	imports {
+		mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+	}
 }
 
 tasks.withType<KotlinCompile> {
